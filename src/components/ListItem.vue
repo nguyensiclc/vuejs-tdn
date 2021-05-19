@@ -1,7 +1,7 @@
 <template>
     <div class="list-item-contaner">
         <div class="add-btn-block">
-            <comp-btn-add v-on:addItem="addItem($event)" className="btn btn-primary" titleBtn="Add" v-bind:typeObject="typeObj"/>
+            <comp-btn functionBtn="add" v-on:addItem="addItem($event)" className="btn btn-primary" title="Add +" v-bind:typeObject="typeObj"/>
         </div>
         <table class="table">
             <thead class="thead-dark">
@@ -23,8 +23,8 @@
                         {{showTitle(item, childItem)}}
                     </td>
                     <td>
-                        <comp-btn-edit className="btn btn-success" title="Edit" styleBtn="margin-right: 5px;" v-bind:itemEdit="item" v-on:editItem="editItem($event)"/>
-                        <comp-btn-delete className="btn btn-danger" title="Delete" v-bind:itemDelete="item" v-on:deleteItem="deleteItem($event)"/>
+                        <comp-btn functionBtn="edit" className="btn btn-success" title="Edit" styleBtn="margin-right: 5px;" v-bind:itemEdit="item" v-on:editItem="editItem($event)"/>
+                        <comp-btn functionBtn="delete" className="btn btn-danger" title="Delete" v-bind:itemDelete="item" v-on:deleteItem="deleteItem($event)"/>
                     </td>
                 </tr>
             </tbody>
@@ -34,9 +34,7 @@
 
 <script>
 import axios from 'axios';
-import compBtnEdit from './componentButton/CompButtonEdit';
-import compBtnAdd from './componentButton/CompButtonAdd';
-import compBtnDelete from './componentButton/CompButtonDelete';
+import compBtn from './componentButton/CompButton.vue';
 export default {
    name : 'list-item',
    data() {
@@ -45,9 +43,7 @@ export default {
        }
    },
     components: {
-        'comp-btn-add' : compBtnAdd,
-        'comp-btn-edit' : compBtnEdit,
-        'comp-btn-delete' : compBtnDelete
+        'comp-btn' : compBtn
     },
     props: {
        list: Array,

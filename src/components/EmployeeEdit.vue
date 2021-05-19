@@ -20,13 +20,12 @@
                 </select>
             </div>
             <div class="form-group col-md-6">
-                <label for="inputState">Position {{employee.posId}}</label>
+                <label for="inputState">Position</label>
                 <select class="form-control" v-model="positionId">
-                    <option
+                    <option :selected="positionId == item.id"
                         v-for="(item, index) in positions"
                         v-bind:key="index"
-                        v-bind:value="item.id"
-                        :selected="item.id == 1">    
+                        v-bind:value="item.id">    
                         {{ item.name}}
                     </option>
                 </select>
@@ -47,9 +46,9 @@
 
 <script>
 import axios from 'axios';
-import compInput from './componentInput/Comp-Input.vue';
 import compChekbox from './componentInput/Comp-checkbox.vue';
 import compRadio from './componentInput/Comp-radio.vue';
+import compInput from './componentInput/Comp-Input.vue';
 
 export default {
     props: {
@@ -73,7 +72,7 @@ export default {
     components: {
         'comp-input' : compInput,
         'comp-checkbox' : compChekbox,
-        'comp-radio' : compRadio
+        'comp-radio' : compRadio,
         
     },
     created() {
