@@ -53,18 +53,20 @@ export default {
         {key: 'name', value: 'Name'},
         {key: 'address', value: 'Address'},
         {key: 'old', value: 'Old'},
-        {key: 'positionId', value: 'Position'}
+        {key: 'year', value: 'Year Exp'},
+        {key: 'married', value: 'Married'},
       ],
       positions:[],
       positionCollum: [
-        {key: 'position', value: 'Position'}
+        {key: 'name', value: 'Position'}
       ],
       positionEdit: null
     }
   },
   mounted () {
-      axios.get('http://localhost:3000/employees/')
+      axios.get('http://localhost:8080/pratice/employee/getAll')
           .then(res => this.employees = res.data)
+          // .then(res => console.log(res.data))
   },
   components: {
     'comp-tab' : CompTab,
@@ -79,14 +81,14 @@ export default {
         this.title = 'Employee Management';
       } else {
         this.title = 'Position Management';
-        axios.get('http://localhost:3000/positions/')
+        axios.get('http://localhost:8080/pratice/pos/getAll')
           .then(res => this.positions = res.data)
       }
     },
     setEditItem(event) {
+      console.log(event.item);
       var typeObj = event.typeObj;
       if(typeObj === 'employee') {
-        console.log(event.item);
         this.employeeEdit = event.item;
       } else {       
         this.positionEdit = event.item;      }
@@ -94,8 +96,14 @@ export default {
     editedOrCancel(event) {
       if ('employee' === event) {
         this.employeeEdit = null;
+        axios.get('http://localhost:8080/pratice/employee/getAll'),
+        axios.get('http://localhost:8080/pratice/employee/getAll')
+        .then(res => this.employees = res.data)
       } else {
         this.positionEdit = null;
+        axios.get('http://localhost:8080/pratice/pos/getAll'),
+        axios.get('http://localhost:8080/pratice/pos/getAll')
+        .then(res => this.positions = res.data)
       }
       
     },
@@ -112,13 +120,14 @@ export default {
     added(event) {
       if ('employee' === event) {
         this.employeeEdit = null;
-        axios.get('http://localhost:3000/employees/'),
-        axios.get('http://localhost:3000/employees/')
+        axios.get('http://localhost:8080/pratice/employee/getAll'),
+        axios.get('http://localhost:8080/pratice/employee/getAll')
         .then(res => this.employees = res.data)
       } else {
+        console.log('zooo');
         this.positionEdit = null;
-        axios.get('http://localhost:3000/positions/'),
-        axios.get('http://localhost:3000/positions/')
+        axios.get('http://localhost:8080/pratice/pos/getAll'),
+        axios.get('http://localhost:8080/pratice/pos/getAll')
         .then(res => this.positions = res.data)
       }
       
@@ -126,12 +135,12 @@ export default {
     },
     updateList(event) {
       if ('employee' === event) {
-        axios.get('http://localhost:3000/employees/'),
-        axios.get('http://localhost:3000/employees/')
+        axios.get('http://localhost:8080/pratice/employee/getAll'),
+        axios.get('http://localhost:8080/pratice/employee/getAll')
         .then(res => this.employees = res.data)
       } else {
-        axios.get('http://localhost:3000/positions/'),
-        axios.get('http://localhost:3000/positions/')
+        axios.get('http://localhost:8080/pratice/pos/getAll'),
+        axios.get('http://localhost:8080/pratice/pos/getAll')
         .then(res => this.positions = res.data)
       }
       

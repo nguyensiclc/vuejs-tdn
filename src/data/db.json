@@ -19,30 +19,36 @@
   "employees": [
     {
       "id": 2,
-      "name": "Trần Văn Bc d",
-      "address": "Đà Nẵng 123 456",
+      "name": "Trần Văn B",
+      "address": "Đà Nẵng",
       "old": "21",
       "positionId": 3
     },
     {
-      "name": "ád 123",
-      "address": "3231",
-      "old": "03",
+      "name": "Trần Văn C",
+      "address": "Quảng Trị",
+      "old": "33",
       "id": 4,
       "positionId": 2
     },
     {
-      "name": "123123",
-      "address": "12312",
-      "old": "012",
+      "name": "Nguyễn Văn A",
+      "address": "Huế",
+      "old": "21",
       "id": 5,
       "positionId": 4
+    },
+    {
+      "name": "23123",
+      "address": "",
+      "old": "12",
+      "id": 6
     }
   ],
   "positions": [
     {
       "id": 1,
-      "position": "Computer software engineer"
+      "position": "Computer software engineer 123213"
     },
     {
       "id": 2,
@@ -53,12 +59,8 @@
       "position": "Programmer"
     },
     {
-      "position": "3",
+      "position": "Web designer",
       "id": 4
-    },
-    {
-      "position": "213123",
-      "id": 5
     }
   ]
 }

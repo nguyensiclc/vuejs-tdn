@@ -6,8 +6,6 @@
         <div class="tab-item">
             <slot></slot>
         </div>
-
-
     </div>
 </template>
 <script>

@@ -1,7 +1,7 @@
 <template>
     <div class="list-item-contaner">
         <div class="add-btn-block">
-            <button class="btn btn-primary" v-on:click="addItem(typeObj)">Add +</button>
+            <comp-btn-add v-on:addItem="addItem($event)" className="btn btn-primary" titleBtn="Add" v-bind:typeObject="typeObj"/>
         </div>
         <table class="table">
             <thead class="thead-dark">
@@ -23,8 +23,8 @@
                         {{showTitle(item, childItem)}}
                     </td>
                     <td>
-                        <button class="btn btn-success" style="margin-right: 5px;" v-on:click="editItem(item, typeObj)">Edit</button>
-                        <button class="btn btn-danger" v-on:click="removeItem(item, typeObj)">Delete</button>
+                        <comp-btn-edit className="btn btn-success" title="Edit" styleBtn="margin-right: 5px;" v-bind:itemEdit="item" v-on:editItem="editItem($event)"/>
+                        <comp-btn-delete className="btn btn-danger" title="Delete" v-bind:itemDelete="item" v-on:deleteItem="deleteItem($event)"/>
                     </td>
                 </tr>
             </tbody>
@@ -34,41 +34,53 @@
 
 <script>
 import axios from 'axios';
+import compBtnEdit from './componentButton/CompButtonEdit';
+import compBtnAdd from './componentButton/CompButtonAdd';
+import compBtnDelete from './componentButton/CompButtonDelete';
 export default {
    name : 'list-item',
    data() {
        return {
-           
+           canDelete :''
        }
    },
-
-   props: {
+    components: {
+        'comp-btn-add' : compBtnAdd,
+        'comp-btn-edit' : compBtnEdit,
+        'comp-btn-delete' : compBtnDelete
+    },
+    props: {
        list: Array,
        collumns : Array,
        typeObj: String
-   },
-   methods: {
-       editItem(item, typeObj) {
-           this.$emit('choseEditItem', {'item' : item, 'typeObj' : typeObj});
+    },
+    methods: {
+       editItem(item) {
+           this.$emit('choseEditItem', {'item' : item, 'typeObj' : this.typeObj});
        },
-       removeItem(item, typeObj) {
-           if ('employee' === typeObj) {
+       deleteItem(item) {
+           if ('employee' === this.typeObj) {
                 var confim = confirm("Confim delete user: " + item.name);
                 if(confim) {
-                    axios.delete('http://localhost:3000/employees/' + item.id, item)
-                    this.$emit('upldateList', typeObj);
+                    axios.post('http://localhost:8080/pratice/employee/delete' , {
+                        id : item.id
+                    })
+                    this.$emit('upldateList', this.typeObj);
                 }
-            } else {
-                confim = confirm("Confim delete position: " + item.position);
-                if(confim) {
-                    axios.delete('http://localhost:3000/positions/' + item.id, item)
-                    this.$emit('upldateList', typeObj);
-                }
+            } else {    
+                 confim = confirm("Confim delete position: " + item.name);
+                    if(confim) {
+                        axios.post('http://localhost:8080/pratice/pos/delete' , {
+                            id : item.id
+                        }).then (
+                            res => alert(res.data.mess)                        )
+                        this.$emit('upldateList', this.typeObj);
+                    }      
             }
            
        },   
-       addItem(typeObject) {
-           this.$emit('addItem', typeObject);
+       addItem(event) {
+           this.$emit('addItem', event);
        },
        showTitle(item, column) {
            var key = column.key;
@@ -76,12 +88,18 @@ export default {
            if ('positionId' === key) {
                fetch('http://localhost:3000/positions/' + item.id)
                .then(res => res.json())
-               .then(this.show = data.position)
+               .then(data => {
+                   show = data.position;
+               })
            } else {
-                show = item[key];
+               if('married' === key) {
+                   show = item[key] ? 'Yes' :  'No';
+               } else {
+                    show = item[key];
+               }
            }
            
-           return show
+          return show;
        }
    }
 }

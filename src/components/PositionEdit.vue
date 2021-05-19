@@ -2,10 +2,8 @@
     <div class="block-info container" v-if="position !== null">
         <h3 style="padding-top:15px">Position Infomation</h3>
         <form class="info-container row" v-on:submit.prevent="onSubmitEdit(position)">
-            <div class="form-group col-6">
-                <label>Name</label>
-                <input ref="position" type="text" v-bind:value="position.position" class="form-control" placeholder="Enter name">
-            </div>
+            <comp-input colClass="col-6" className="form-control" typeInput="text" label="Name position" placeholder="Enter name position" 
+                v-bind:value="position.name" @inputed="inputedName($event)" type="input"/>
             <div class="form-group col-md-6">
             </div>
             <div class="col-md-2 block-btn">
@@ -19,27 +17,40 @@
 
 <script>
 import axios from 'axios';
+import compInput from './componentInput/Comp-Input.vue';
 
 export default {
     data() {
         return {
-            typeObject: 'position'
+            typeObject: 'position',
+            posName : ''
         }
+    },
+    components: {
+        'comp-input' : compInput
     },
     props: {
         position:Object
     },
     methods: {
+        inputedName(event) {
+            console.log(event);
+            this.posName = event;
+        },
         onSubmitEdit(position) { 
-            position.position = this.$refs.position.value;
             if(position.id != null) {
-                return axios.put('http://localhost:3000/positions/' + position.id, position).then(
+                return axios.post('http://localhost:8080/pratice/pos/update', {
+                    id : this.position.id,
+                    name : this.posName
+                }).then(
                     this.$emit('edited', this.typeObject)
                 )
             } else {
-                axios.post('http://localhost:3000/positions/', position).then (
+                return axios.post('http://localhost:8080/pratice/pos/add', {
+                    name : this.posName
+                }).then(
                     this.$emit('addedItem', this.typeObject)
-                );
+                )
             }
         },
         cancelEditOrAdd() {
