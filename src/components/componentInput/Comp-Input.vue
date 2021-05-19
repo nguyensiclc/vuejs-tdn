@@ -23,7 +23,6 @@ export default {
     },
     methods: {
         inputed() {
-            console.log(this.$refs.data.value);
             this.$emit('inputed', this.$refs.data.value);
         }
     }
