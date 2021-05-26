@@ -1,5 +1,6 @@
 <template>
-  <comp-tab v-bind:title="title">
+  <comp-header/>
+  <!-- <comp-tab v-bind:title="title">
      <ul class="list-tab">
           <li v-for="(tab, index) in tabs"
               v-bind:key="tab.id"
@@ -24,16 +25,17 @@
      </div>
   </comp-tab>
   <employee-edit v-if="employeeEdit != null" :employee="employeeEdit" @edited="editedOrCancel($event)" @addedItem="added($event)" @cancelUpdate="editedOrCancel($event)"/>
-  <position-edit :position="positionEdit" @edited="editedOrCancel($event)" @addedItem="added($event)" @cancelUpdate="editedOrCancel($event)"/>
+  <position-edit :position="positionEdit" @edited="editedOrCancel($event)" @addedItem="added($event)" @cancelUpdate="editedOrCancel($event)"/> -->
 
 </template>
 
 <script>
 
-import CompTab from './components/Comp-Tab'
-import ListItem from './components/ListItem'
-import EmployeeEdit from './components/EmployeeEdit'
-import PositionEdit from './components/PositionEdit'
+// import CompTab from './components/Comp-Tab'
+// import ListItem from './components/ListItem'
+// import EmployeeEdit from './components/EmployeeEdit'
+// import PositionEdit from './components/PositionEdit'
+import CompHeader from './components/Comp-header'
 import axios from 'axios';
 
 
@@ -64,15 +66,15 @@ export default {
     }
   },
   mounted () {
-      axios.get('http://localhost:8080/pratice/employee/getAll')
-          .then(res => this.employees = res.data)
-          // .then(res => console.log(res.data))
+      // axios.get('http://localhost:8080/pratice/employee/getAll')
+      //     .then(res => this.employees = res.data)
   },
   components: {
-    'comp-tab' : CompTab,
-    'list-item' : ListItem,
-    'employee-edit' : EmployeeEdit,
-    'position-edit' : PositionEdit
+    // 'comp-tab' : CompTab,
+    // 'list-item' : ListItem,
+    // 'employee-edit' : EmployeeEdit,
+    'comp-header' : CompHeader,
+    // 'position-edit' : PositionEdit
   },
   methods: {
     clickTab(index) {
@@ -154,7 +156,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
